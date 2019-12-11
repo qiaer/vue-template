@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const WebpackDeployFtp = require('webpack-deploy-ftp');
 
 const env = require('../config/prod.env')
 
@@ -115,7 +116,21 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+
+    // ftp auto upload
+    // github https://github.com/qiaer/webpack-deploy-ftp
+    new WebpackDeployFtp({
+      dir: './dist',
+      remoteDir: "xxx/2019/xxx-1209",
+      connect: {
+          host: '127.0.0.1',
+          port: 21,
+          user: 'xxxx',
+          password: '********'
+      }
+    })
+
   ]
 })
 
